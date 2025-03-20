@@ -1,17 +1,27 @@
 package bettinger.gedcom5to7;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.io.IOException;
-import java.util.Stack;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Collection;
-import java.util.TreeMap;
 import java.util.Map;
-import java.util.Iterator;
+import java.util.Stack;
+import java.util.TreeMap;
 
-import bettinger.gedcom5to7.pipeline.*;
+import bettinger.gedcom5to7.pipeline.AgeDateFilter;
+import bettinger.gedcom5to7.pipeline.EnumFilter;
+import bettinger.gedcom5to7.pipeline.ExidFilter;
+import bettinger.gedcom5to7.pipeline.FileFilter;
+import bettinger.gedcom5to7.pipeline.Filter;
+import bettinger.gedcom5to7.pipeline.LanguageFilter;
+import bettinger.gedcom5to7.pipeline.MediaTypeFilter;
+import bettinger.gedcom5to7.pipeline.NoteFilter;
+import bettinger.gedcom5to7.pipeline.ObjectFilter;
+import bettinger.gedcom5to7.pipeline.RenameFilter;
+import bettinger.gedcom5to7.pipeline.TranFilter;
+import bettinger.gedcom5to7.pipeline.VersionFilter;
 
 public class Converter5to7 {
     private int lastID;

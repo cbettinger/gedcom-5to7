@@ -1,8 +1,8 @@
 package bettinger.gedcom5to7.pipeline;
 
-import bettinger.gedcom5to7.GedStruct;
 import java.util.Collection;
-import java.util.Iterator;
+
+import bettinger.gedcom5to7.GedStruct;
 
 /**
  * Convert NOTE records with 0 or 2+ incoming pointers to SNOTE records.

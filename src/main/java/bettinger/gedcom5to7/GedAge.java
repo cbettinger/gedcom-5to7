@@ -1,7 +1,7 @@
 package bettinger.gedcom5to7;
 
-import java.util.regex.Pattern;
 import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * Parses GEDCOM 5.5.1 age payloads and converts them into GEDCOM 7.0 age payloads.

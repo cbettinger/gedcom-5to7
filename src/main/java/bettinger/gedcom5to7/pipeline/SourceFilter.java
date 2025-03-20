@@ -1,8 +1,9 @@
 package bettinger.gedcom5to7.pipeline;
 
-import bettinger.gedcom5to7.GedStruct;
 import java.util.Collection;
 import java.util.LinkedList;
+
+import bettinger.gedcom5to7.GedStruct;
 
 /**
  * Two changes to SOUR <Text>:

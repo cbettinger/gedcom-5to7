@@ -1,7 +1,8 @@
 package bettinger.gedcom5to7.pipeline;
-import bettinger.gedcom5to7.GedStruct;
+
 import bettinger.gedcom5to7.GedAge;
 import bettinger.gedcom5to7.GedDateValue;
+import bettinger.gedcom5to7.GedStruct;
 
 public class AgeDateFilter implements Filter {
     public java.util.Collection<GedStruct> update(GedStruct s) {

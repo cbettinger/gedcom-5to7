@@ -1,9 +1,10 @@
 package bettinger.gedcom5to7.pipeline;
 
-import bettinger.gedcom5to7.GedStruct;
 import java.util.Collection;
-import java.util.LinkedList;
 import java.util.Iterator;
+import java.util.LinkedList;
+
+import bettinger.gedcom5to7.GedStruct;
 
 /**
  * Convert OBJE substructures with no payload into a pointer to an OBJE record

@@ -1,4 +1,5 @@
 package bettinger.gedcom5to7.pipeline;
+
 import bettinger.gedcom5to7.GedStruct;
 
 /**

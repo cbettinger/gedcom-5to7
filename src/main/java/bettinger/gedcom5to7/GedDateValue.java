@@ -1,9 +1,5 @@
 package bettinger.gedcom5to7;
 
-import java.util.regex.Pattern;
-import java.util.regex.Matcher;
-import java.nio.CharBuffer;
-
 /**
  * Parses GEDCOM 5.5.1 date payloads and converts them into GEDCOM 7.0 date payloads and phrases.
  */

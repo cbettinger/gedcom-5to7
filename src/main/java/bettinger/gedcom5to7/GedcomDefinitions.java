@@ -1,12 +1,10 @@
 package bettinger.gedcom5to7;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Scanner;
-import java.io.IOException;
-
 
 public class GedcomDefinitions {
     private HashMap<String,String> cards, enums, langs, morelangs, pays, subs, tagOf;
