@@ -548,7 +548,7 @@ Atorada	aox
 Uab Meto	aoz
 Apache	apa
 Sa'a	apb
-North Levantine Arabic	apc
+Levantine Arabic	apc
 Sudanese Arabic	apd
 Bukiyip	ape
 Pahanan Agta	apf
@@ -1183,6 +1183,7 @@ Baima	bqh
 Bakhtiari	bqi
 Bandial	bqj
 Banda-Mbrès	bqk
+Karian	bql
 Bilakura	bql
 Wumboko	bqm
 Bulgarian Sign Language	bqn
@@ -1602,6 +1603,7 @@ Idu-Mishmi	clk
 Chala	cll
 Clallam	clm
 Lowland Oaxaca Chontal	clo
+Classical Sanskrit	cls
 Lautu Chin	clt
 Caluyanun	clu
 Chulym	clw
@@ -1782,6 +1784,7 @@ Kwere	cwe
 Chewong	cwg
 Cheq Wong	cwg
 Kuwaataay	cwt
+Cha'ari	cxh
 Nopala Chatino	cya
 Cayubaba	cyb
 Cuyonon	cyo
@@ -1813,6 +1816,7 @@ Dawida	dav
 Davawenyo	daw
 Dayi	dax
 Land Dayak	day
+Moi-Wadea	daz
 Dao	daz
 Bangime	dba
 Deno	dbb
@@ -1877,6 +1881,7 @@ Andaandi	dgl
 Dongolawi	dgl
 Dagoman	dgn
 Dogri (individual	dgo
+Tlicho	dgr
 Dogrib	dgr
 Tłı̨chǫ	dgr
 Dogoso	dgs
@@ -2040,6 +2045,7 @@ Lower Sorbian	dsb
 Dutch Sign Language	dse
 Daasanach	dsh
 Disa	dsi
+Dokshi	dsk
 Danish Sign Language	dsl
 Dusner	dsn
 Desiya	dso
@@ -2107,6 +2113,7 @@ Yanda Dom Dogon	dym
 Dyangadi	dyn
 Dhanggatti	dyn
 Jola-Fonyi	dyo
+Dyarim	dyr
 Dyula	dyu
 Djabugay	dyy
 Dyaabugay	dyy
@@ -2236,6 +2243,7 @@ Etruscan	ett
 Ejagham	etu
 Eten	etx
 Semimi	etz
+Eudeve	eud
 Basque (family)	euq
 Even	eve
 Uvbie	evh
@@ -2829,6 +2837,7 @@ Hani	hni
 Hmong Njua	hnj
 Mong Leng	hnj
 Mong Njua	hnj
+Hainanese	hnm
 Hanunoo	hnn
 Northern Hindko	hno
 Caribbean Hindustani	hns
@@ -2983,6 +2992,7 @@ Kalabari	ijn
 Ijo	ijo
 Southeast Ijo	ijs
 Eastern Canadian Inuktitut	ike
+Ikhin-Arokho	ikh
 Iko	iki
 Ika	ikk
 Ikulu	ikl
@@ -3066,6 +3076,7 @@ Isoko	iso
 Israeli Sign Language	isr
 Istriot	ist
 Isu (Menchum Division)	isu
+Interslavic	isv
 Binongan Itneg	itb
 Italic	itc
 Southern Tidung	itd
@@ -3097,6 +3108,7 @@ Mesaka	iyo
 Yaka (Congo)	iyx
 Ingrian	izh
 Izi-Ezaa-Ikwo-Mgbo	izi
+Kizamani	izm
 Izere	izr
 Izii	izz
 Jamamadí	jaa
@@ -3697,7 +3709,7 @@ Karelian	krl
 Krim	krm
 Sapo	krn
 Kru	kro
-Korop	krp
+Durop	krp
 Krung	krr
 Gbaya (Sudan)	krs
 Tumari Kanuri	krt
@@ -3927,7 +3939,7 @@ Lacandon	lac
 Ladino	lad
 Pattani	lae
 Lafofa	laf
-Langi	lag
+Rangi	lag
 Lahnda	lah
 Lambya	lai
 Lango (Uganda)	laj
@@ -4036,6 +4048,8 @@ Opuuo	lgn
 Lango (South Sudan)	lgo
 Logba	lgq
 Lengo	lgr
+Guinea-Bissau Sign Language	lgs
+Língua Gestual Guineense	lgs
 Pahi	lgt
 Longgu	lgu
 Ligenza	lgz
@@ -4166,6 +4180,7 @@ Inonhan	loc
 Saluan	loe
 Logol	lof
 Logo	log
+Laarim	loh
 Narim	loh
 Loma (Côte d'Ivoire)	loi
 Lou	loj
@@ -4247,6 +4262,7 @@ Aringa	luc
 Ludian	lud
 Luvale	lue
 Laua	luf
+Leizhou Chinese	luh
 Luiseno	lui
 Luna	luj
 Lunanakha	luk
@@ -4269,6 +4285,7 @@ Southern Luri	luz
 Maku'a	lva
 Lavi	lvi
 Lavukaleve	lvk
+Lwel	lvl
 Standard Latvian	lvs
 Levuka	lvu
 Lwalu	lwa
@@ -4604,6 +4621,8 @@ Mae	mme
 Mundat	mmf
 North Ambrym	mmg
 Mehináku	mmh
+Hember Avu	mmi
+Amben	mmi
 Musar	mmi
 Majhwar	mmj
 Mukha-Dora	mmk
@@ -5325,6 +5344,7 @@ Noric	nrc
 Southern Rengma Naga	nre
 Jèrriais	nrf
 Guernésiais	nrf
+Sercquiais	nrf
 Narango	nrg
 Chokri Naga	nri
 Ngarla	nrk
@@ -5471,6 +5491,7 @@ Nzadi	nzd
 Nzima	nzi
 Nzakara	nzk
 Zeme Naga	nzm
+Dir-Nyamzak-Mbarimi	nzr
 New Zealand Sign Language	nzs
 Teke-Nzikou	nzu
 Nzakambay	nzy
@@ -6028,6 +6049,7 @@ Lengua de Señas del Paraguay	pys
 Puyuma	pyu
 Pyu (Myanmar)	pyx
 Pyen	pyy
+Pesse	pze
 Pazeh	pzh
 Jejara Naga	pzn
 Para Naga	pzn
@@ -6219,15 +6241,17 @@ Dela-Oenale	row
 Repanbitip	rpn
 Rapting	rpt
 Ririo	rri
+Moriori	rrm
 Waima	rro
 Arritinngithigh	rrt
 Romano-Serbian	rsb
 Rennellese Sign Language	rsi
 Ruthenian	rsk
-Rusyn	rsk
+Rusnak	rsk
 Russian Sign Language	rsl
 Miriwoong Sign Language	rsm
 Rwandan Sign Language	rsn
+Rishiwa	rsw
 Rungtu Chin	rtc
 Ratahan	rth
 Rotuman	rtm
@@ -6462,6 +6486,7 @@ Sivandi	siy
 Siwi	siz
 Epena	sja
 Sajau Basap	sjb
+Shaojiang Chinese	sjc
 Kildin Sami	sjd
 Pite Sami	sje
 Assangori	sjg
@@ -7270,6 +7295,7 @@ Turka	tuz
 Vaghua	tva
 Tsuvadi	tvd
 Te'un	tve
+Tulai	tvi
 Southeast Ambrym	tvk
 Tuvalu	tvl
 Tela-Masbuar	tvm
@@ -7402,6 +7428,7 @@ Ulumanda'	ulm
 Unserdeutsch	uln
 Uma' Lung	ulu
 Ulwa	ulw
+Buli	uly
 Umatilla	uma
 Umbundu	umb
 Marrucinian	umc
@@ -7523,6 +7550,7 @@ Vinza	vin
 Vishavan	vis
 Viti	vit
 Iduna	viv
+Bajjika	vjk
 Kariyarra	vka
 Ija-Zuba	vki
 Kujarge	vkj
@@ -7574,6 +7602,7 @@ Burmbar	vrt
 Banam Bay	vrt
 Moldova Sign Language	vsi
 Venezuelan Sign Language	vsl
+Vedic Sanskrit	vsn
 Valencian Sign Language	vsv
 Llengua de signes valenciana	vsv
 Vitou	vto
@@ -7728,7 +7757,7 @@ Wambon	wms
 Walmajarri	wmt
 Mwani	wmw
 Womo	wmx
-Wanambre	wnb
+Mokati	wnb
 Wantoat	wnc
 Wandarang	wnd
 Waneci	wne
@@ -7791,6 +7820,7 @@ Owenia	wsr
 Wasa	wss
 Wasu	wsu
 Wotapuri-Katarqalai	wsv
+Matambwe	wtb
 Watiwa	wtf
 Wathawurrung	wth
 Berta	wti
@@ -8209,6 +8239,7 @@ Chesu	ych
 Lolopo	ycl
 Yucuna	ycn
 Chepya	ycp
+Yilan Creole	ycr
 Yanda	yda
 Eastern Yiddish	ydd
 Yangum Dey	yde
@@ -8264,6 +8295,7 @@ Yir Yoront	yiy
 Azhe	yiz
 Yakan	yka
 Northern Yukaghir	ykg
+Khamnigan Mongol	ykh
 Yoke	yki
 Yakaikeke	ykk
 Khlula	ykl
@@ -8309,6 +8341,7 @@ Mator-Taygi-Karagas	ymt
 Northern Muji	ymx
 Muzi	ymz
 Aluo	yna
+Yamben	ynb
 Yandruwandha	ynd
 Lang'e	yne
 Yango	yng
@@ -8459,6 +8492,7 @@ Ngazidja Comorian	zdj
 Zeeuws	zea
 Zenag	zeg
 Eastern Hongshuihe Zhuang	zeh
+Zeem	zem
 Zenaga	zen
 Kinga	zga
 Guibei Zhuang	zgb
@@ -8502,6 +8536,7 @@ Malay (individual	zlm
 Lianshan Zhuang	zln
 Liuqian Zhuang	zlq
 South Slavic	zls
+Zul	zlu
 West Slavic	zlw
 Manda (Australia)	zma
 Zimba	zmb
