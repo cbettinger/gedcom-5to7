@@ -24,7 +24,7 @@ import bettinger.gedcom5to7.pipeline.SourceFilter;
 import bettinger.gedcom5to7.pipeline.TranFilter;
 import bettinger.gedcom5to7.pipeline.VersionFilter;
 
-public class Converter5to7 {
+public class Main {
     private int lastID;
     private final int ID_BASE;
     private final int ID_TO_SKIP;
@@ -36,7 +36,7 @@ public class Converter5to7 {
     /**
      * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
      */
-    public Converter5to7(String filename) {
+    public Main(String filename) {
         this(filename, 10);
     }
 
@@ -44,7 +44,7 @@ public class Converter5to7 {
      * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
      * Record IDs are assigned as sequential base-<code>id_base</code> integers.
      */
-    public Converter5to7(String filename, int id_base) {
+    public Main(String filename, int id_base) {
         if (id_base < 2 || id_base > 36) throw new IllegalArgumentException("id_base must be between 2 and 36");
         ID_BASE = id_base;
         if (ID_BASE > 'V'-'A'+10) ID_TO_SKIP = Integer.parseInt("VOID", ID_BASE);
@@ -155,7 +155,7 @@ public class Converter5to7 {
         System.err.println();
         for(String path : args) {
             System.err.println("\nProcessing "+path+" ...");
-            Converter5to7 conv = new Converter5to7(path);
+            Main conv = new Main(path);
             try { conv.dumpTo(System.out); } catch (IOException ex) { ex.printStackTrace(); }
             for(String err : conv.log) System.err.println("** "+err);
             System.err.println("    ... done with " + path+"\n");
