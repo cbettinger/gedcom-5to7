@@ -9,7 +9,7 @@
 			"name": "GEDCOM 5to7",
 			"request": "launch",
 			"mainClass": "bettinger.gedcom5to7.Converter5to7",
-			"args": ["${workspaceFolder}\\data\\gedcom551.ged"],
+			"args": ["${workspaceFolder}/data/gedcom551.ged"],
 			"projectName": "gedcom5to7",
 			"console": "internalConsole"
 		}
