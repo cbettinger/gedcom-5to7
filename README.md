@@ -26,7 +26,7 @@ java DownloadDefinitions
 
 from the projects root directory.
 
-`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the gedcom5to7 package.
+`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the gedcom-5to7 package.
 
 # Current status
 

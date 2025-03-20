@@ -6,11 +6,11 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "GEDCOM 5to7",
+			"name": "gedcom-5to7",
 			"request": "launch",
 			"mainClass": "bettinger.gedcom5to7.Main",
 			"args": ["${workspaceFolder}/data/gedcom551.ged"],
-			"projectName": "gedcom5to7",
+			"projectName": "gedcom-5to7",
 			"console": "internalConsole"
 		}
 	]
