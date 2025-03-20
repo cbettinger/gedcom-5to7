@@ -1,5 +1,5 @@
-package ged5to7.pipeline;
-import ged5to7.GedStruct;
+package bettinger.gedcom5to7.pipeline;
+import bettinger.gedcom5to7.GedStruct;
 
 /**
  * Updates required HEAD fields.
@@ -12,7 +12,7 @@ public class VersionFilter implements Filter {
             s.sub.removeIf(s2 -> s2.tag.equals("GEDC") || s2.tag.equals("CHAR") || s2.tag.equals("SUBN") || s2.tag.equals("FILE"));
             GedStruct gedc = new GedStruct(null, "https://gedcom.io/terms/v7/GEDC", (String)null);
             GedStruct vers = new GedStruct(gedc, "https://gedcom.io/terms/v7/GEDC-VERS", "7.0");
-            
+
             s.sub.addFirst(gedc); gedc.sup = s;
         }
         if (s.tag.equals("SUBN")) { s.sup = s; } // delete SUBN records

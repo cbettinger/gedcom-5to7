@@ -1,6 +1,6 @@
-package ged5to7.pipeline;
-import ged5to7.GedStruct;
-import ged5to7.GedcomDefinitions;
+package bettinger.gedcom5to7.pipeline;
+import bettinger.gedcom5to7.GedStruct;
+import bettinger.gedcom5to7.GedcomDefinitions;
 
 public class LanguageFilter implements Filter {
     public java.util.Collection<GedStruct> update(GedStruct s) {

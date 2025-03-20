@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -23,7 +23,7 @@ public class GedDateValue {
     private String modifier, phrase;
     public enum Type { VALUE, EXACT, PERIOD }
     private Type type;
-    
+
     private enum TokenType { NONE, GREGMONTH, KEY1, KEY2, KEY12, EPOCH, WORD, NUMBER, OPAREN, CPAREN, SLASH, ERROR }
     private static class GedDateToken {
         TokenType type;
@@ -77,13 +77,13 @@ public class GedDateValue {
         ans.next(b);
         return ans;
     }
-    
+
     public static GedDateValue from551(String payload) {
         GedDateValue ans = new GedDateValue();
         GedDateToken tok = new GedDateToken();
         CharStackQueue p = new CharStackQueue(payload);
         tok.next(p);
-        
+
         if (tok.type == TokenType.OPAREN) { // "n DATE (text)"
             while(!p.isEmpty() && Character.isWhitespace(p.peek())) p.pop();
             if (p.peek() == ')') p.pop();
@@ -104,7 +104,7 @@ public class GedDateValue {
         if (tok.type == TokenType.WORD) { d.calendar = tok.token; tok.next(p); }
         // month?
         if (tok.type == TokenType.GREGMONTH) {
-            d.month = tok.token; tok.next(p); 
+            d.month = tok.token; tok.next(p);
             if (tok.type == TokenType.SLASH) {
                 ans.phrase = payload;
                 tok.next(p); tok.next(p);
@@ -114,7 +114,7 @@ public class GedDateValue {
         if (tok.type == TokenType.NUMBER) {
             d.year = tok.number;
             tok.next(p);
-            
+
             // special undocumented "34/5" as shorthand for "BET 34 AND 35"
             if (ans.modifier == null && d.month == null && ans.phrase == null && tok.type == TokenType.SLASH) {
                 ans.phrase = payload;
@@ -146,13 +146,13 @@ public class GedDateValue {
                 ans.phrase = payload;
                 tok.next(p); tok.next(p);
             }
-        } 
+        }
         // (day) month?
-        if (d.month == null 
+        if (d.month == null
         && (tok.type == TokenType.GREGMONTH || d.calendar != null && tok.type == TokenType.WORD)) {
             d.day = d.year;
             d.year = 0;
-            d.month = tok.token; tok.next(p); 
+            d.month = tok.token; tok.next(p);
             if (tok.type == TokenType.SLASH) {
                 ans.phrase = payload;
                 tok.next(p); tok.next(p);
@@ -178,9 +178,9 @@ public class GedDateValue {
             if (tok.token.startsWith("B")) d.epoch = "BCE";
             tok.next(p);
         }
-        
+
         // what's next depends on starting keyword
-        
+
         if (ans.modifier == null // no keyword, so only this date
         || ans.modifier.equals("TO") // single-date keywords
         || ans.modifier.equals("BEF")
@@ -191,7 +191,7 @@ public class GedDateValue {
             if (tok.type != TokenType.NONE) ans.phrase = payload;
             return ans;
         }
-        
+
         if (ans.modifier.equals("INT")) { // INT <date> (<date phrase>)
             ans.modifier = null; // not used as a modifier in GEDCOM 7
             if (tok.type == TokenType.OPAREN && ans.phrase == null) {
@@ -204,7 +204,7 @@ public class GedDateValue {
             }
             return ans;
         }
-        
+
         if (ans.modifier.equals("FROM")) { // FROM <date> -or- FROM <date> TO <date>
             if (tok.type == TokenType.NONE) return ans;
             if (tok.type == TokenType.KEY12
@@ -216,7 +216,7 @@ public class GedDateValue {
                 ans.phrase = payload;
                 return ans;
             }
-        } else if (tok.type != TokenType.KEY2 
+        } else if (tok.type != TokenType.KEY2
         || !(tok.token.equals("AND") && ans.modifier.equals("BET"))) {
             ans.phrase = payload;
             return ans;
@@ -226,13 +226,13 @@ public class GedDateValue {
         }
 
         // if haven't returned yet, need a second date
-        // similar to first, but without the special undocumented shorthand 
-        
+        // similar to first, but without the special undocumented shorthand
+
         // calendar?
         if (tok.type == TokenType.WORD) { d.calendar = tok.token; tok.next(p); }
         // month?
         if (tok.type == TokenType.GREGMONTH) {
-            d.month = tok.token; tok.next(p); 
+            d.month = tok.token; tok.next(p);
             if (tok.type == TokenType.SLASH) {
                 ans.phrase = payload;
                 tok.next(p); tok.next(p);
@@ -248,11 +248,11 @@ public class GedDateValue {
             }
         }
         // (day) month?
-        if (d.month == null 
+        if (d.month == null
         && (tok.type == TokenType.GREGMONTH || d.calendar != null && tok.type == TokenType.WORD)) {
             d.day = d.year;
             d.year = 0;
-            d.month = tok.token; tok.next(p); 
+            d.month = tok.token; tok.next(p);
             if (tok.type == TokenType.SLASH) {
                 ans.phrase = payload;
                 tok.next(p); tok.next(p);
@@ -278,7 +278,7 @@ public class GedDateValue {
             if (tok.token.startsWith("B")) d.epoch = "BCE";
             tok.next(p);
         }
-        
+
         // and now MUST end
         if (tok.type != TokenType.NONE) {
             ans.phrase = payload;

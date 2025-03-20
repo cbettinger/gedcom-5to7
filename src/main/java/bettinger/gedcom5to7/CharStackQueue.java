@@ -1,11 +1,11 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 /**
  * Java's String, CharSequence, CharBuffer, and Stream all make various simple
  * character-level operations tedious. This class tries to approximate some of
  * the flexibility of C's char** in Java. It can be used like CharBuffer, or
  * a stack, or a queue.
- * 
+ *
  * Like C, this is unchecked; if you push to a full buffer it silently does
  * the wrong thing instead of throwing an exception.
  */

@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -11,7 +11,7 @@ import java.util.TreeMap;
 import java.util.Map;
 import java.util.Iterator;
 
-import ged5to7.pipeline.*;
+import bettinger.gedcom5to7.pipeline.*;
 
 public class Converter5to7 {
     private int lastID;
@@ -19,9 +19,9 @@ public class Converter5to7 {
     private final int ID_TO_SKIP;
     private LinkedList<GedStruct> records;
     private List<String> log;
-    
+
     final static java.nio.charset.Charset UTF8 = java.nio.charset.Charset.forName("UTF-8");
-    
+
     /**
      * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
      */
@@ -38,11 +38,11 @@ public class Converter5to7 {
         ID_BASE = id_base;
         if (ID_BASE > 'V'-'A'+10) ID_TO_SKIP = Integer.parseInt("VOID", ID_BASE);
         else ID_TO_SKIP = -1;
-        
+
         records = new LinkedList<GedStruct>();
         log = new LinkedList<String>();
         lastID = -1;
-        
+
         fuzzyParse(filename);
         GedStruct trlr = records.removeLast();
         if (!"TRLR".equals(trlr.tag)) {
@@ -50,7 +50,7 @@ public class Converter5to7 {
             trlr = new GedStruct(null, "TRLR");
         }
         for(GedStruct s : records) s.tag2uri();
-        
+
         Filter[] filters = {
             new RenameFilter(),
             new AgeDateFilter(),
@@ -78,11 +78,11 @@ public class Converter5to7 {
         }
 
         for(GedStruct s : records) s.uri2tag();
-        
+
         reID();
         records.add(trlr);
     }
-    
+
     /**
      * Parses a file, logging but permitting errors, and converts cross-references to pointers.
      */
@@ -103,14 +103,14 @@ public class Converter5to7 {
                 }
             });
             stack.clear();
-            
+
             for(GedStruct record: records) record.convertPointers(xref, true, LinkedList.class);
 
         } catch(Exception ex) {
             log.add(ex.toString());
         }
     }
-    
+
     /**
      * Outputs a parsed dataset as a GEDCOM file.
      */
@@ -118,7 +118,7 @@ public class Converter5to7 {
         out.write("\uFEFF".getBytes(UTF8));
         for(GedStruct rec : records) out.write(rec.toString().getBytes(UTF8));
     }
-    
+
     /**
      * Allocates and returns the next available record ID.
      */
@@ -126,7 +126,7 @@ public class Converter5to7 {
         if (lastID == ID_TO_SKIP) lastID += 1;
         return "@" + Integer.toString(lastID++, ID_BASE).toUpperCase() + "@";
     }
-    
+
     /**
      * Finds which anchors are actually used, renames those, and scraps unused anchors.
      * Unnecessary by itself, but useful before NOTE/SNOTE heuristic and after adding new records.
@@ -139,7 +139,7 @@ public class Converter5to7 {
                 record.id = null;
             }
     }
-    
+
     public static void main(String[] args) {
         System.err.println();
         for(String path : args) {

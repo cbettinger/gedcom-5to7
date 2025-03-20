@@ -1,5 +1,5 @@
-package ged5to7.pipeline;
-import ged5to7.GedStruct;
+package bettinger.gedcom5to7.pipeline;
+import bettinger.gedcom5to7.GedStruct;
 
 public interface Filter {
     /**

@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -9,7 +9,7 @@ public class CharsetDetector {
     private int pos;
     private int cap;
     private FileInputStream f;
-    
+
     private CharsetDetector(FileInputStream f) {
         buffer = new byte[1024];
         pos = 0;
@@ -90,7 +90,7 @@ public class CharsetDetector {
             if (got < 1) return Charset.forName("UTF-8");
             if (got == 1) return Charset.forName("ISO-8859-1"); // a non-standard but popular superset of ASCII
             return new AnselCharset();
-        } catch (IOException ex) { 
+        } catch (IOException ex) {
             ex.printStackTrace();
             return Charset.forName("UTF-8");
         }

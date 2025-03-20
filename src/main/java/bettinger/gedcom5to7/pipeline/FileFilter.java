@@ -1,5 +1,5 @@
-package ged5to7.pipeline;
-import ged5to7.GedStruct;
+package bettinger.gedcom5to7.pipeline;
+import bettinger.gedcom5to7.GedStruct;
 
 public class FileFilter implements Filter {
     private static String escapePath(String url) {
@@ -15,7 +15,7 @@ public class FileFilter implements Filter {
     public java.util.Collection<GedStruct> update(GedStruct s) {
         if ("https://gedcom.io/terms/v7/FILE".equals(s.uri)) {
             String url = s.payload;
-            
+
             if (url.contains("://")) {
                 // URL schema://host.com/path/to/file.ext
             } else if (url.startsWith("\\\\")) {

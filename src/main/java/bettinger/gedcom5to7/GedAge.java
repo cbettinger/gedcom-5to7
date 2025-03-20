@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.util.regex.Pattern;
 import java.util.regex.Matcher;
@@ -10,14 +10,14 @@ public class GedAge {
     private char modifier;
     private int year, month, week, day;
     private String phrase;
-    
+
     private static final Pattern SYNTAX = Pattern.compile(
         "(?:\\s*(?:(CHILD)|(INFANT)|(STILLBORN))\\s*)|(?:\\s*([<>]))?((?:\\s*\\d+\\s*[ymwd]?)+)\\s*",
         Pattern.CASE_INSENSITIVE);
     private static final Pattern SYNTAX_PART = Pattern.compile("(\\d+)\\s*([ymwd]?)",
         Pattern.CASE_INSENSITIVE);
-    
-    
+
+
     private GedAge() {
         modifier = '\0';
         year = month = week = day = -1;
@@ -31,7 +31,7 @@ public class GedAge {
         this.day = day;
         this.phrase = phrase;
     }
-    
+
     public static GedAge from551(String payload) {
         Matcher m = SYNTAX.matcher(payload);
         if (!m.matches()) return new GedAge('\0',-1,-1,-1,-1,payload);

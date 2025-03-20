@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.util.LinkedList;
 import java.util.Map;
@@ -27,10 +27,10 @@ public class GedStruct {
         VOID = new GedStruct(null, "");
         VOID.id = "@VOID@";
     }
-    
+
     /**
      * Parse a line from a GEDCOM file into a basic GedStruct
-     * 
+     *
      * @throws@ IllegalArgumentException if the line cannot be parsed
      */
     public GedStruct(String line) {
@@ -46,8 +46,8 @@ public class GedStruct {
         tag = m.group(3).toUpperCase();
         payload = fixAtSign(m.group(4));
     }
-    
-    
+
+
     public GedStruct(GedStruct sup, String tag) {
         this.sub = new LinkedList<GedStruct>();
         if (tag.indexOf(':') < 0) this.tag = tag;
@@ -77,7 +77,7 @@ public class GedStruct {
         if (sup != null) { sup.addSubstructure(this); this.level = sup.level+1; }
         else { this.sup = null; this.level = 0; }
     }
-    
+
     static private String fixAtSign(String payload) {
         if (payload == null || payload.length() == 0) return null;
         Matcher m = AT_DETECTOR.matcher(payload);
@@ -102,7 +102,7 @@ public class GedStruct {
         ans += payload.substring(lastidx);
         return ans;
     }
-    
+
     public void tag2uri() { this.tag2uri(true); }
     public void tag2uri(boolean replaceSelf) {
         GedcomDefinitions def = GedcomDefinitions.getDefinitions();
@@ -121,7 +121,7 @@ public class GedStruct {
         }
         for(GedStruct kid : sub) kid.uri2tag();
     }
-    
+
     /**
      * Adds a substructure to this structure. If the substructure is
      * a CONT or CONC, this operation modifies the payload; otherwise
@@ -142,11 +142,11 @@ public class GedStruct {
             return true;
         }
     }
-    
+
     /**
      * Given a map from xref_id strings to their parsed structures,
      * populates the <code>pointsTo</code> fields of this struct
-     * and its substructures. If <code>cleanup</code> is 
+     * and its substructures. If <code>cleanup</code> is
      * <code>true</code>, also clears old xref_id payloads and
      * replaces dead pointers with <code"@VOID@"</code>.
      */
@@ -173,7 +173,7 @@ public class GedStruct {
         }
         for(GedStruct s : sub) s.convertPointers(xref, cleanup, cachetype);
     }
-    
+
     public void pointTo(GedStruct struct) {
         if (pointsTo == struct) return;
         if (pointsTo != null) pointsTo.incoming.remove(this);
@@ -185,9 +185,9 @@ public class GedStruct {
             pointsTo = VOID;
         }
     }
-    
+
     // validate payload datatypes and pointed-to types
-    
+
     /**
      * Helper method for toString
      */
@@ -214,7 +214,7 @@ public class GedStruct {
         sb.append("\n");
         for(GedStruct s : sub) s.serialize(sb);
     }
-    
+
     /**
      * Serializes as GEDCOM. Advanced data overrides primitive data:
      * for example, superstructure supersedes level, pointers

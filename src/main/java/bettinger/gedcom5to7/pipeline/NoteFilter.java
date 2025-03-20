@@ -1,6 +1,6 @@
-package ged5to7.pipeline;
+package bettinger.gedcom5to7.pipeline;
 
-import ged5to7.GedStruct;
+import bettinger.gedcom5to7.GedStruct;
 import java.util.Collection;
 import java.util.Iterator;
 

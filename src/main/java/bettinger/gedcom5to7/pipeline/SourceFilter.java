@@ -1,12 +1,12 @@
-package ged5to7.pipeline;
+package bettinger.gedcom5to7.pipeline;
 
-import ged5to7.GedStruct;
+import bettinger.gedcom5to7.GedStruct;
 import java.util.Collection;
 import java.util.LinkedList;
 
 /**
  * Two changes to SOUR <Text>:
- * 
+ *
  * 1. Create a new SOUR record with a NOTE <Text>
  * 2. Put any TEXT substructures inside a new DATA substructure
  */

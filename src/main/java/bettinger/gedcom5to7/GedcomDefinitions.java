@@ -1,4 +1,4 @@
-package ged5to7;
+package bettinger.gedcom5to7;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -13,7 +13,7 @@ public class GedcomDefinitions {
     private HashSet<String> structSet, enumSet, singular;
     private HashMap<String, HashSet<String>> required;
     private static GedcomDefinitions engine;
-    
+
     private static HashMap<String,String> readTSV(Scanner s) {
         HashMap<String,String> ans = new HashMap<String, String>();
         while (s.hasNextLine()) {
@@ -36,8 +36,8 @@ public class GedcomDefinitions {
         }
         return ans;
     }
-    
-    
+
+
     private void addTags(HashMap<String,String> src) {
         for(String key : src.keySet()) {
             String tag = key.split("\t")[1];
@@ -48,7 +48,7 @@ public class GedcomDefinitions {
             else if (old == null) tagOf.put(val, tag);
         }
     }
-    
+
     /// enumerations.tsv was split into two files after most of this code was written. This placeholder function replicates the old format from the new.
     private static HashMap<String,String> oldEnumFormat(HashMap<String,String> enums, HashMap<String,HashSet<String>> esets) {
         HashMap<String,String> ans = new HashMap<String,String>();
@@ -63,10 +63,10 @@ public class GedcomDefinitions {
         return ans;
     }
 
-    
+
     private GedcomDefinitions() {
         tagOf = new HashMap<String,String>();
-        
+
         cards = readTSV(new Scanner(getClass().getResourceAsStream("config/cardinalities.tsv")));
         required = new HashMap<String,HashSet<String>>();
         singular = new HashSet<String>();
@@ -78,7 +78,7 @@ public class GedcomDefinitions {
             }
             if (v.charAt(3) == '1') singular.add(k);
         });
-        
+
         pays = readTSV(new Scanner(getClass().getResourceAsStream("config/payloads.tsv")));
 
         HashMap<String, String> e1 = readTSV(new Scanner(getClass().getResourceAsStream("config/enumerations.tsv")));
@@ -86,7 +86,7 @@ public class GedcomDefinitions {
         enums = oldEnumFormat(e1, e2);
         enumSet = new HashSet<String>(enums.values());
         addTags(enums);
-        
+
         subs = readTSV(new Scanner(getClass().getResourceAsStream("config/substructures.tsv")));
         subs.put("\tHEAD", "HEAD pseudostructure"); //// HARD-CODE based on substructures.tsv implementation
         structSet = new HashSet<String>(subs.values());
@@ -182,7 +182,7 @@ public class GedcomDefinitions {
         if (ans == null) ans = morelangs.get(ctx);
         return ans;
     }
-    
+
     public static void main(String[] args) {
         new GedcomDefinitions();
     }
