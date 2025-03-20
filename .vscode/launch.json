@@ -6,7 +6,7 @@
 	"configurations": [
 		{
 			"type": "java",
-			"name": "gedcom-5to7",
+			"name": "Test run",
 			"request": "launch",
 			"mainClass": "bettinger.gedcom5to7.Main",
 			"args": ["${workspaceFolder}/data/gedcom551.ged"],
