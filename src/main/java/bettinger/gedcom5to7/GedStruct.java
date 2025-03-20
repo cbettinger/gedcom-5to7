@@ -176,7 +176,7 @@ public class GedStruct {
 
     public void pointTo(GedStruct struct) {
         if (pointsTo == struct) return;
-        if (pointsTo != null) pointsTo.incoming.remove(this);
+        if (pointsTo != null && pointsTo.incoming != null) pointsTo.incoming.remove(this);
         pointsTo = struct;
         if (pointsTo != null) {
             if (pointsTo.incoming == null) pointsTo.incoming = new LinkedList<GedStruct>();
