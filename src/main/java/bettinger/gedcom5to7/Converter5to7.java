@@ -20,6 +20,7 @@ import bettinger.gedcom5to7.pipeline.MediaTypeFilter;
 import bettinger.gedcom5to7.pipeline.NoteFilter;
 import bettinger.gedcom5to7.pipeline.ObjectFilter;
 import bettinger.gedcom5to7.pipeline.RenameFilter;
+import bettinger.gedcom5to7.pipeline.SourceFilter;
 import bettinger.gedcom5to7.pipeline.TranFilter;
 import bettinger.gedcom5to7.pipeline.VersionFilter;
 
