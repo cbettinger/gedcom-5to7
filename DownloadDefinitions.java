@@ -58,13 +58,13 @@ public class DownloadDefinitions {
 	}
 
 	public static void main(String[] args) {
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerations.tsv", "src/main/java/bettinger/gedcom5to7/config/enumerations.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerationsets.tsv", "src/main/java/bettinger/gedcom5to7/config/enumerationsets.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/payloads.tsv", "src/main/java/bettinger/gedcom5to7/config/payloads.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/substructures.tsv", "src/main/java/bettinger/gedcom5to7/config/substructures.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/cardinalities.tsv", "src/main/java/bettinger/gedcom5to7/config/cardinalities.tsv");
-		download("https://github.com/fhiso/legacy-format/raw/master/languages.tsv", "src/main/java/bettinger/gedcom5to7/config/languages.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerations.tsv", "src/main/java/bettinger/gedcom5to7/definitions/enumerations.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerationsets.tsv", "src/main/java/bettinger/gedcom5to7/definitions/enumerationsets.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/payloads.tsv", "src/main/java/bettinger/gedcom5to7/definitions/payloads.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/substructures.tsv", "src/main/java/bettinger/gedcom5to7/definitions/substructures.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/cardinalities.tsv", "src/main/java/bettinger/gedcom5to7/definitions/cardinalities.tsv");
+		download("https://github.com/fhiso/legacy-format/raw/master/languages.tsv", "src/main/java/bettinger/gedcom5to7/definitions/languages.tsv");
 
-		downloadIANALanguageSubtagRegistery("src/main/java/bettinger/gedcom5to7/config/all-languages.tsv");
+		downloadIANALanguageSubtagRegistery("src/main/java/bettinger/gedcom5to7/definitions/all-languages.tsv");
 	}
 }

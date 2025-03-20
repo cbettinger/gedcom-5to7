@@ -13,20 +13,20 @@ Missing but potentially desirable functionality:
 
 # Updating to new versions of GEDCOM
 
-The file `ged5to7/config/` contains copies of the TSV files
+The folder `src/main/java/bettinger/gedcom5to7/definitions` contains copies of the TSV files
 from <https://github.com/FamilySearch/GEDCOM/>,
 <https://github.com/fhiso/legacy-format/>,
 and <https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry>.
 These can be updated by running
 
-```bash
+```sh
 javac DownloadDefinitions.java
 java DownloadDefinitions
 ```
 
-The above will overwrite the files in `ged5to7/config/` with updated versions.
+from the projects root directory.
 
-`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the ged5to7 package.
+`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the gedcom5to7 package.
 
 # Current status
 
