@@ -1,35 +1,18 @@
-# Feature-complete but limited testing
+# gedcom-5to7
+This is an open source Java implementation of a GEDCOM 5.5.1 to GEDCOM 7.0 converter. It is a fork of [java-converter](https://github.com/gedcom7code/java-converter) released to public domain by its author [Luther Tychonievich](https://github.com/tychonievich).
 
-This implements all of the major pieces of a 5.5.1-to-7.0 converter.
-Some tests were perfomed during development, but not enough to provide confidence of bug-free status.
+The aim of this fork is to publish a somewhat polished and maven-buildable version. Furthermore I will try to complete the missing functionalities (see below).
 
-Some parts are ported directly from the [C converter](https://github.com/gedcom7code/c-converter) (such as the ANSEL Charset and date and age parsing) while others are built from the ground up. The hope is that having two somewhat-separate implementations will allow me to use the two to test one another, a hope that has already resulted in a few bug fixes in the C version.
+## Current Status
+This implements all of the major pieces of a 5.5.1-to-7.0 converter. Some tests were perfomed during development, but not enough to provide confidence of bug-free status.
 
-Missing but potentially desirable functionality:
+### To-Do
+- [ ] change string-valued `INDI`.`ALIA` into `NAME` with `TYPE` `AKA`
+- [ ] move base64-encoded OBJE into GEDZIP file
+- [ ] add `SCHMA` for all used known extensions
+    - [ ] add URIs (or standard tags) for all extensions from <https://wiki-de.genealogy.net/GEDCOM/_Nutzerdef-Tag> and <http://www.gencom.org.nz/GEDCOM_tags.html>
 
-- [ ] fix common 5.5.1 error of `INDI`.`ALIA` meaning `INDI`.`NAME`.`TYPE ALIA`
-- [ ] handle 5.5's base64-encoded OBJE, generating GEDZip files
-- [ ] put common extensions into a `SCHMA`
-
-# Updating to new versions of GEDCOM
-
-The folder `src/main/java/bettinger/gedcom5to7/definitions` contains copies of the TSV files
-from <https://github.com/FamilySearch/GEDCOM/>,
-<https://github.com/fhiso/legacy-format/>,
-and <https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry>.
-These can be updated by running
-
-```sh
-javac DownloadDefinitions.java
-java DownloadDefinitions
-```
-
-from the projects root directory.
-
-`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the gedcom-5to7 package.
-
-# Current status
-
+### Done
 - [x] Detect character encodings, as documented in [ELF Serialisation](https://fhiso.org/TR/elf-serialisation).
 - [x] Convert to UTF-8
 - [x] Normalize line whitespace, including stripping leading spaces
@@ -78,8 +61,17 @@ from the projects root directory.
 - [x] Change any illegal tag `XYZ` into `_EXT_XYZ`
     - [ ] or to `_XYZ` and add a SCHMA entry for it
     - [ ] leave unchanged under extensions
-- [ ] (extra) change string-valued `INDI`.`ALIA` into `NAME` with `TYPE` `AKA`
-- [ ] (5.5) change base64-encoded OBJE into GEDZIP
-- [ ] add `SCHMA` for all used known extensions
-    - [ ] add URIs (or standard tags) for all extensions from <https://wiki-de.genealogy.net/GEDCOM/_Nutzerdef-Tag> and <http://www.gencom.org.nz/GEDCOM_tags.html>
 
+## Updating to new versions of GEDCOM
+The folder `src/main/java/bettinger/gedcom5to7/definitions` contains copies of the TSV files from <https://github.com/FamilySearch/GEDCOM/>, <https://github.com/fhiso/legacy-format/> and <https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry> used during runtime.
+
+These can be updated by running
+
+```sh
+javac DownloadDefinitions.java
+java DownloadDefinitions
+```
+
+from the projects root directory.
+
+`DownloadDefinitions.java` is otherwise unneeded, and should not be included in distributions of the gedcom-5to7 package.
