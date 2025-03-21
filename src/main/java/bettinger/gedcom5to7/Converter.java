@@ -190,11 +190,10 @@ public class Converter {
 			try {
 				final var converter = Converter.parse(path);
 				converter.write(System.out);
+				System.out.println(String.format("Converted '%s'.", path));
 			} catch (Exception e) {
 				System.err.println(String.format("Unable to convert file '%s':%n%s", path, e.toString()));
 			}
-
-			System.out.println(String.format("Converted '%s'.", path));
 		}
 	}
 }
