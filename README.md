@@ -8,8 +8,8 @@ The aim of this fork is to publish a somewhat polished and maven-buildable versi
 ### Standalone
 ```sh
 mvn package
-java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged
-java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged > data/gedcom7.ged
+java -jar target/gedcom-5to7-1.0.2.jar data/gedcom551.ged
+java -jar target/gedcom-5to7-1.0.2.jar data/gedcom551.ged > data/gedcom7.ged
 ```
 
 ### As dependency
@@ -32,7 +32,7 @@ Add the repository and the dependency to your application's `pom.xml`:
 		<dependency>
 			<groupId>com.github.cbettinger</groupId>
 			<artifactId>gedcom-5to7</artifactId>
-			<version>1.0.0</version>
+			<version>1.0.2</version>
 		</dependency>
 	</dependencies>
 </project>
