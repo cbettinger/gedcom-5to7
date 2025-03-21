@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>23</maven.compiler.source>
 		<maven.compiler.target>23</maven.compiler.target>
-		<exec.mainClass>bettinger.gedcom5to7.Main</exec.mainClass>
+		<exec.mainClass>bettinger.gedcom5to7.Converter</exec.mainClass>
 	</properties>
 	<dependencies>
 	</dependencies>
