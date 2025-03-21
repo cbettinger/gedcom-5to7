@@ -9,6 +9,7 @@ The aim of this fork is to publish a somewhat polished and maven-buildable versi
 ```sh
 mvn package
 java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged
+java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged > data/gedcom7.ged
 ```
 
 ### As dependency

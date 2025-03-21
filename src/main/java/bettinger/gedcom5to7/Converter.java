@@ -185,16 +185,13 @@ public class Converter {
 	}
 
 	public static void main(String[] args) {
-		for (final String path : args) {
-			var absolutePath = new File(path).getAbsolutePath();
-			System.out.println(String.format("Processing '%s'...", absolutePath));
-
+		if (args.length == 1) {
+			final var absolutePath = new File(args[0]).getAbsolutePath();
 			try {
 				final var converter = Converter.parse(absolutePath);
 				converter.write(System.out);
-				System.out.println(String.format("Converted '%s'.", absolutePath));
 			} catch (Exception e) {
-				System.err.println(String.format("Unable to convert file '%s':%n%s", absolutePath, e.toString()));
+				System.exit(-1);
 			}
 		}
 	}
