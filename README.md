@@ -116,7 +116,7 @@ This implements all of the major pieces of a 5.5.1-to-7.0 converter. Some tests 
     - [ ] leave unchanged under extensions
 
 ## Updating to new GEDCOM definitions
-The folder `src/main/java/bettinger/gedcom5to7/definitions` contains copies of the TSV defintion files from <https://github.com/FamilySearch/GEDCOM/>, <https://github.com/fhiso/legacy-format/> and <https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry> used during runtime.
+The folder `src/main/resources` contains copies of the TSV defintion files from <https://github.com/FamilySearch/GEDCOM/>, <https://github.com/fhiso/legacy-format/> and <https://www.iana.org/assignments/language-subtag-registry/language-subtag-registry> used during runtime.
 
 These can be updated by running
 

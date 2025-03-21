@@ -65,7 +65,7 @@ public class GedcomDefinitions {
     private GedcomDefinitions() {
         tagOf = new HashMap<String,String>();
 
-        cards = readTSV(new Scanner(getClass().getResourceAsStream("definitions/cardinalities.tsv")));
+        cards = readTSV(new Scanner(getClass().getResourceAsStream("/cardinalities.tsv")));
         required = new HashMap<String,HashSet<String>>();
         singular = new HashSet<String>();
         cards.forEach((k,v) -> {
@@ -77,27 +77,27 @@ public class GedcomDefinitions {
             if (v.charAt(3) == '1') singular.add(k);
         });
 
-        pays = readTSV(new Scanner(getClass().getResourceAsStream("definitions/payloads.tsv")));
+        pays = readTSV(new Scanner(getClass().getResourceAsStream("/payloads.tsv")));
 
-        HashMap<String, String> e1 = readTSV(new Scanner(getClass().getResourceAsStream("definitions/enumerations.tsv")));
-        HashMap<String, HashSet<String>> e2 = readTSV2(new Scanner(getClass().getResourceAsStream("definitions/enumerationsets.tsv")));
+        HashMap<String, String> e1 = readTSV(new Scanner(getClass().getResourceAsStream("/enumerations.tsv")));
+        HashMap<String, HashSet<String>> e2 = readTSV2(new Scanner(getClass().getResourceAsStream("/enumerationsets.tsv")));
         enums = oldEnumFormat(e1, e2);
         enumSet = new HashSet<String>(enums.values());
         addTags(enums);
 
-        subs = readTSV(new Scanner(getClass().getResourceAsStream("definitions/substructures.tsv")));
+        subs = readTSV(new Scanner(getClass().getResourceAsStream("/substructures.tsv")));
         subs.put("\tHEAD", "HEAD pseudostructure"); //// HARD-CODE based on substructures.tsv implementation
         structSet = new HashSet<String>(subs.values());
         addTags(subs);
 
-        langs = readTSV(new Scanner(getClass().getResourceAsStream("definitions/languages.tsv")));
+        langs = readTSV(new Scanner(getClass().getResourceAsStream("/languages.tsv")));
         for(String key : langs.keySet()) { // remove trailing '*' from ELF's tsv
             String val = langs.get(key);
             if (val.endsWith("*")) {
                 langs.put(key, val.substring(0,val.length()-1));
             }
         }
-        morelangs = readTSV(new Scanner(getClass().getResourceAsStream("definitions/all-languages.tsv")));
+        morelangs = readTSV(new Scanner(getClass().getResourceAsStream("/all-languages.tsv")));
     }
     public static GedcomDefinitions getDefinitions() {
         if (engine == null) engine = new GedcomDefinitions();

@@ -58,13 +58,13 @@ public class DownloadDefinitions {
 	}
 
 	public static void main(String[] args) {
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerations.tsv", "src/main/java/bettinger/gedcom5to7/definitions/enumerations.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerationsets.tsv", "src/main/java/bettinger/gedcom5to7/definitions/enumerationsets.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/payloads.tsv", "src/main/java/bettinger/gedcom5to7/definitions/payloads.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/substructures.tsv", "src/main/java/bettinger/gedcom5to7/definitions/substructures.tsv");
-		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/cardinalities.tsv", "src/main/java/bettinger/gedcom5to7/definitions/cardinalities.tsv");
-		download("https://github.com/fhiso/legacy-format/raw/master/languages.tsv", "src/main/java/bettinger/gedcom5to7/definitions/languages.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerations.tsv", "src/main/resources/enumerations.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/enumerationsets.tsv", "src/main/resources/enumerationsets.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/payloads.tsv", "src/main/resources/payloads.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/substructures.tsv", "src/main/resources/substructures.tsv");
+		download("https://github.com/FamilySearch/GEDCOM/raw/main/extracted-files/cardinalities.tsv", "src/main/resources/cardinalities.tsv");
+		download("https://github.com/fhiso/legacy-format/raw/master/languages.tsv", "src/main/resources/languages.tsv");
 
-		downloadIANALanguageSubtagRegistery("src/main/java/bettinger/gedcom5to7/definitions/all-languages.tsv");
+		downloadIANALanguageSubtagRegistery("src/main/resources/all-languages.tsv");
 	}
 }
