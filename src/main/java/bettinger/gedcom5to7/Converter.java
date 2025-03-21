@@ -29,16 +29,11 @@ import bettinger.gedcom5to7.pipeline.VersionFilter;
 public class Converter {
 	private final int idBase;
 	private final int idToSkip;
-	private int lastID;
-	private List<GedStruct> records;
-	private List<String> errorLog;
+	private int lastId;
 
-	/**
-	 * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
-	 */
-	public Converter(String filename) {
-		this(filename, 10);
-	}
+	private List<GedStruct> records;
+
+	private List<String> errorLog;
 
 	/**
 	 * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
@@ -50,8 +45,10 @@ public class Converter {
 
 		this.idBase = idBase;
 		this.idToSkip = idBase > 'V' - 'A' + 10 ? Integer.parseInt("VOID", idBase) : -1;
-		this.lastID = -1;
+		this.lastId = -1;
+
 		this.records = new LinkedList<>();
+
 		this.errorLog = new LinkedList<>();
 
 		fuzzyParse(filename);
@@ -133,26 +130,6 @@ public class Converter {
 	}
 
 	/**
-	 * Outputs a parsed dataset as a GEDCOM file.
-	 */
-	public void write(final OutputStream outputStream) throws IOException {
-		outputStream.write("\uFEFF".getBytes(StandardCharsets.UTF_8));
-
-		for (GedStruct r : records)
-			outputStream.write(r.toString().getBytes(StandardCharsets.UTF_8));
-	}
-
-	/**
-	 * Allocates and returns the next available record ID.
-	 */
-	private String nextID() {
-		if (lastID == idToSkip)
-			lastID += 1;
-
-		return "@" + Integer.toString(lastID++, idBase).toUpperCase() + "@";
-	}
-
-	/**
 	 * Finds which anchors are actually used, renames those and scraps unused
 	 * anchors. Unnecessary by itself, but useful before NOTE/SNOTE heuristic and
 	 * after adding new records.
@@ -166,19 +143,56 @@ public class Converter {
 			}
 	}
 
+	/**
+	 * Allocates and returns the next available record ID.
+	 */
+	private String nextID() {
+		if (lastId == idToSkip)
+			lastId += 1;
+
+		return "@" + Integer.toString(lastId++, idBase).toUpperCase() + "@";
+	}
+
+	/**
+	 * Outputs a parsed dataset as a GEDCOM file.
+	 */
+	public void write(final OutputStream outputStream) throws IOException {
+		outputStream.write("\uFEFF".getBytes(StandardCharsets.UTF_8));
+
+		for (GedStruct r : records)
+			outputStream.write(r.toString().getBytes(StandardCharsets.UTF_8));
+	}
+
+	public static class ConvertException extends Exception {
+		public ConvertException(final List<String> errorLog) {
+			super(String.join("\n** ", errorLog));
+		}
+	}
+
+	public static Converter parse(String filename) throws ConvertException {
+		return Converter.parse(filename, 10);
+	}
+
+	public static Converter parse(String filename, int idBase) throws ConvertException {
+		final var converter = new Converter(filename, idBase);
+
+		if (!converter.errorLog.isEmpty()) {
+			throw new ConvertException(converter.errorLog);
+		}
+
+		return converter;
+	}
+
 	public static void main(String[] args) {
 		for (final String path : args) {
 			System.out.println(String.format("Processing '%s'...", path));
 
-			final Converter converter = new Converter(path);
 			try {
+				final var converter = Converter.parse(path);
 				converter.write(System.out);
-			} catch (IOException e) {
-				System.err.println(String.format("Unable to convert file '%s': %s", path, e.toString()));
+			} catch (Exception e) {
+				System.err.println(String.format("Unable to convert file '%s':%n%s", path, e.toString()));
 			}
-
-			for (final String error : converter.errorLog)
-				System.err.println(String.format("** %s", error));
 
 			System.out.println(String.format("Converted '%s'.", path));
 		}
