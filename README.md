@@ -13,7 +13,48 @@ java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged > data/gedcom7.ged
 ```
 
 ### As dependency
-TODO
+Add the repository and the dependency to your application's `pom.xml`:
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://maven.apache.org/POM/4.0.0"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	...
+	<repositories>
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
+	<dependencies>
+		...
+		<dependency>
+			<groupId>com.github.cbettinger</groupId>
+			<artifactId>gedcom-5to7</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+	</dependencies>
+</project>
+```
+
+Parse GEDCOM 5.5.1 file and write GEDCOM 7 file:
+
+```java
+import bettinger.gedcom5to7.Converter;
+import bettinger.gedcom5to7.Converter.ConvertException;
+
+...
+
+try (final OutputStream output = new FileOutputStream(target)) {
+	final Converter converter = Converter.parse(source);
+	converter.write(output);
+} catch (final ConvertException e1) {
+	System.err.println(e1.toString());
+} catch (final IOException e2) {
+	System.err.println(e2.toString());
+}
+```
 
 ## Current Status
 This implements all of the major pieces of a 5.5.1-to-7.0 converter. Some tests were perfomed during development, but not enough to provide confidence of bug-free status.
