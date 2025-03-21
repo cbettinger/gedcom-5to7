@@ -40,7 +40,7 @@ public class Converter {
 	 * Parses file using error-tolerant algorithm and performs full 5to7 conversion.
 	 * Record IDs are assigned as sequential base-<code>idBase</code> integers.
 	 */
-	public Converter(String filename, int idBase) {
+	private Converter(String filename, int idBase) {
 		if (idBase < 2 || idBase > 36)
 			throw new IllegalArgumentException("idBse must be between 2 and 36");
 
