@@ -1,5 +1,6 @@
 package bettinger.gedcom5to7;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
@@ -185,14 +186,15 @@ public class Converter {
 
 	public static void main(String[] args) {
 		for (final String path : args) {
-			System.out.println(String.format("Processing '%s'...", path));
+			var absolutePath = new File(path).getAbsolutePath();
+			System.out.println(String.format("Processing '%s'...", absolutePath));
 
 			try {
-				final var converter = Converter.parse(path);
+				final var converter = Converter.parse(absolutePath);
 				converter.write(System.out);
-				System.out.println(String.format("Converted '%s'.", path));
+				System.out.println(String.format("Converted '%s'.", absolutePath));
 			} catch (Exception e) {
-				System.err.println(String.format("Unable to convert file '%s':%n%s", path, e.toString()));
+				System.err.println(String.format("Unable to convert file '%s':%n%s", absolutePath, e.toString()));
 			}
 		}
 	}
