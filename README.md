@@ -3,6 +3,17 @@ This is an open source Java implementation of a GEDCOM 5.5.1 to GEDCOM 7.0 conve
 
 The aim of this fork is to publish a somewhat polished and maven-buildable version. Furthermore I will try to complete the missing functionalities (see below).
 
+## Usage
+
+### Standalone
+```sh
+mvn package
+java -jar target/gedcom-5to7-1.0.0.jar data/gedcom551.ged
+```
+
+### As dependency
+TODO
+
 ## Current Status
 This implements all of the major pieces of a 5.5.1-to-7.0 converter. Some tests were perfomed during development, but not enough to provide confidence of bug-free status.
 
