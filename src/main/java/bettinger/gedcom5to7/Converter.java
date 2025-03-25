@@ -6,7 +6,6 @@ import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -71,10 +70,7 @@ public class Converter {
 			while (iterator.hasNext()) {
 				final GedStruct struct = iterator.next();
 
-				Collection<GedStruct> updatedRecods = filter.update(struct);
-
-				if (updatedRecods != null)
-					createdRecords.addAll(updatedRecods);
+				createdRecords.addAll(filter.update(struct));
 
 				if (struct.sup != null)
 					iterator.remove();

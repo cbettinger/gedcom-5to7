@@ -1,42 +1,42 @@
 package bettinger.gedcom5to7.pipeline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import bettinger.gedcom5to7.GedStruct;
 
 public class FileFilter implements Filter {
-    private static String escapePath(String url) {
-        url = url.replace("%", "%25");
-        url = url.replace(":", "%3A");
-        url = url.replace("?", "%3F");
-        url = url.replace("#", "%23");
-        url = url.replace("[", "%5B");
-        url = url.replace("]", "%5D");
-        url = url.replace("@", "%40");
-        return url;
-    }
-    public java.util.Collection<GedStruct> update(GedStruct s) {
-        if ("https://gedcom.io/terms/v7/FILE".equals(s.uri)) {
-            String url = s.payload;
+	public Collection<GedStruct> update(final GedStruct struct) {
+		if ("https://gedcom.io/terms/v7/FILE".equals(struct.uri)) {
+			String url = struct.payload;
 
-            if (url.contains("://")) {
-                // URL schema://host.com/path/to/file.ext
-            } else if (url.startsWith("\\\\")) {
-                // Microsoft's network location notation \\server\path\to\file.ext
-                url = "file:"+escapePath(url.replace('\\','/'));
-            } else if (url.matches("[A-Za-z]:\\\\.*")) {
-                // Microsoft's absolute c:\path\to\file.ext
-                url = "file:///"+url.charAt(0)+":/"+escapePath(url.substring(3).replace('\\','/'));
-            } else if (url.startsWith("/")) {
-                // POSIX's absolute /path/to/file.ext
-                url = "file://"+escapePath(url);
-            } else {
-                // Microsoft's relative path\to\file.ext
-                // POSIX's relative path/to/file.ext
-                url = escapePath(url.replace('\\','/'));
-            }
+			if (url.contains("://")) {
+				// URL schema://host.com/path/to/file.ext
+			} else if (url.startsWith("\\\\")) {
+				// Microsoft's network location notation \\server\path\to\file.ext
+				url = "file:" + escapePath(url.replace('\\', '/'));
+			} else if (url.matches("[A-Za-z]:\\\\.*")) {
+				// Microsoft's absolute c:\path\to\file.ext
+				url = "file:///" + url.charAt(0) + ":/" + escapePath(url.substring(3).replace('\\', '/'));
+			} else if (url.startsWith("/")) {
+				// POSIX's absolute /path/to/file.ext
+				url = "file://" + escapePath(url);
+			} else {
+				// Microsoft's relative path\to\file.ext
+				// POSIX's relative path/to/file.ext
+				url = escapePath(url.replace('\\', '/'));
+			}
 
-            s.payload = url;
-        }
-        for(GedStruct s2 : s.sub) update(s2);
-        return null;
-    }
+			struct.payload = url;
+		}
+
+		for (final var subStruct : struct.sub)
+			update(subStruct);
+
+		return new ArrayList<>();
+	}
+
+	private static String escapePath(final String url) {
+		return url.replace("%", "%25").replace(":", "%3A").replace("?", "%3F").replace("#", "%23").replace("[", "%5B").replace("]", "%5D").replace("@", "%40");
+	}
 }

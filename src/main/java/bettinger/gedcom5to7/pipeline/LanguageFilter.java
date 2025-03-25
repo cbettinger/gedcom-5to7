@@ -1,17 +1,25 @@
 package bettinger.gedcom5to7.pipeline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import bettinger.gedcom5to7.GedStruct;
 import bettinger.gedcom5to7.GedcomDefinitions;
 
 public class LanguageFilter implements Filter {
-    public java.util.Collection<GedStruct> update(GedStruct s) {
-        String phrase = null;
-        if ((s.tag != null) && s.tag.equals("LANG")) {
-            String lang = GedcomDefinitions.getDefinitions().langTag(s.payload);
-            if (lang == null) new GedStruct(s, "https://gedcom.io/terms/v7/PHRASE", s.payload);
-            s.payload = (lang == null) ? "und" : lang;
-        }
-        for(GedStruct s2 : s.sub) update(s2);
-        return null;
-    }
+	public Collection<GedStruct> update(final GedStruct struct) {
+		if ((struct.tag != null) && struct.tag.equals("LANG")) {
+			var lang = GedcomDefinitions.getDefinitions().langTag(struct.payload);
+
+			if (lang == null)
+				new GedStruct(struct, "https://gedcom.io/terms/v7/PHRASE", struct.payload);
+
+			struct.payload = (lang == null) ? "und" : lang;
+		}
+
+		for (final var subStruct : struct.sub)
+			update(subStruct);
+
+		return new ArrayList<>();
+	}
 }

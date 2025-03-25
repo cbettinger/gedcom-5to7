@@ -1,32 +1,54 @@
 package bettinger.gedcom5to7.pipeline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import bettinger.gedcom5to7.GedStruct;
 
 public class TranFilter implements Filter {
-    public java.util.Collection<GedStruct> update(GedStruct s) {
-        if (s.sup != null && "TYPE".equals(s.tag)) {
-            if ("FONE".equals(s.sup.tag)) {
-                s.sup.tag = "TRAN";
-                s.tag = "LANG";
-                switch(s.payload.toLowerCase()) {
-                    case "hangul": s.payload = "ko-hang"; break;
-                    case "kana": s.payload = "jp-hrkt"; break;
-                    case "pinyin": s.payload = "und-Latn-pinyin"; break;
-                    default: s.payload = "x-phonetic-"+s.payload;
-                }
-                s.sup.tag2uri();
-            } else if ("ROMN".equals(s.sup.tag)) {
-                s.sup.tag = "TRAN";
-                s.tag = "LANG";
-                switch(s.payload.toLowerCase()) {
-                    case "romanji": s.payload = "jp-Latn"; break;
-                    case "wadegiles": s.payload = "zh-Latn-wadegile"; break;
-                    default: s.payload = "und-Latn-x-"+s.payload;
-                }
-                s.sup.tag2uri();
-            }
-        }
-        for(GedStruct s2 : s.sub) update(s2);
-        return null;
-    }
+	public Collection<GedStruct> update(final GedStruct struct) {
+		if (struct.sup != null && "TYPE".equals(struct.tag)) {
+			if ("FONE".equals(struct.sup.tag)) {
+				struct.sup.tag = "TRAN";
+				struct.tag = "LANG";
+
+				switch (struct.payload.toLowerCase()) {
+					case "hangul":
+						struct.payload = "ko-hang";
+						break;
+					case "kana":
+						struct.payload = "jp-hrkt";
+						break;
+					case "pinyin":
+						struct.payload = "und-Latn-pinyin";
+						break;
+					default:
+						struct.payload = "x-phonetic-" + struct.payload;
+				}
+
+				struct.sup.tag2uri();
+			} else if ("ROMN".equals(struct.sup.tag)) {
+				struct.sup.tag = "TRAN";
+				struct.tag = "LANG";
+
+				switch (struct.payload.toLowerCase()) {
+					case "romanji":
+						struct.payload = "jp-Latn";
+						break;
+					case "wadegiles":
+						struct.payload = "zh-Latn-wadegile";
+						break;
+					default:
+						struct.payload = "und-Latn-x-" + struct.payload;
+				}
+
+				struct.sup.tag2uri();
+			}
+		}
+
+		for (final var subStruct : struct.sub)
+			update(subStruct);
+
+		return new ArrayList<>();
+	}
 }

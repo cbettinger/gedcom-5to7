@@ -1,22 +1,30 @@
 package bettinger.gedcom5to7.pipeline;
 
+import java.util.ArrayList;
+import java.util.Collection;
+
 import bettinger.gedcom5to7.GedStruct;
 
 /**
- * Updates required HEAD fields.
- * In 5.5.1 that was GEDC.VERS, GEDC.FORM, and CHAR.
- * In 7.0 it's just GEDC.VERS, which is recommended to come first.
+ * Updates required HEAD fields. In 5.5.1 that was GEDC.VERS, GEDC.FORM and
+ * CHAR. In 7.0 it's just GEDC.VERS, which is recommended to come first.
  */
 public class VersionFilter implements Filter {
-    public java.util.Collection<GedStruct> update(GedStruct s) {
-        if (s.tag.equals("HEAD")) {
-            s.sub.removeIf(s2 -> s2.tag.equals("GEDC") || s2.tag.equals("CHAR") || s2.tag.equals("SUBN") || s2.tag.equals("FILE"));
-            GedStruct gedc = new GedStruct(null, "https://gedcom.io/terms/v7/GEDC", (String)null);
-            GedStruct vers = new GedStruct(gedc, "https://gedcom.io/terms/v7/GEDC-VERS", "7.0");
+	public Collection<GedStruct> update(final GedStruct struct) {
+		if (struct.tag.equals("HEAD")) {
+			struct.sub.removeIf(s -> s.tag.equals("GEDC") || s.tag.equals("CHAR") || s.tag.equals("SUBN") || s.tag.equals("FILE"));
 
-            s.sub.addFirst(gedc); gedc.sup = s;
-        }
-        if (s.tag.equals("SUBN")) { s.sup = s; } // delete SUBN records
-        return null;
-    }
+			final var gedc = new GedStruct(null, "https://gedcom.io/terms/v7/GEDC", (String) null);
+			new GedStruct(gedc, "https://gedcom.io/terms/v7/GEDC-VERS", "7.0");
+
+			struct.sub.addFirst(gedc);
+			gedc.sup = struct;
+		}
+
+		if (struct.tag.equals("SUBN")) {
+			struct.sup = struct;
+		} // TODO: delete SUBN records
+
+		return new ArrayList<>();
+	}
 }
