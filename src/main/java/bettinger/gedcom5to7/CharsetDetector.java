@@ -15,9 +15,9 @@ public class CharsetDetector {
 
 	private CharsetDetector(final FileInputStream inputStream) {
 		this.inputStream = inputStream;
-		buffer = new byte[1024];
-		position = 0;
-		length = 0;
+		this.buffer = new byte[1024];
+		this.position = 0;
+		this.length = 0;
 	}
 
 	private int readNextByte() throws IOException {
@@ -44,13 +44,13 @@ public class CharsetDetector {
 
 		List<Integer> tmp;
 
-		int b = readNextByte();
+		var b = readNextByte();
 		while (b >= 0) {
-			final char c1 = (char) b;
+			final var c1 = (char) b;
 
 			for (int i = 0; i < needles.length; i += 1) {
-				final String n = needles[i];
-				char c = n.charAt(0);
+				final var n = needles[i];
+				var c = n.charAt(0);
 
 				if (c == '\r')
 					c = '\n';
@@ -65,11 +65,11 @@ public class CharsetDetector {
 					dots[1].add((i << 16) | 1);
 			}
 
-			for (int dot : dots[0]) {
-				final int i = dot >> 16;
-				final int j = dot & 0xFFFF;
-				final String n = needles[i];
-				char c = n.charAt(j);
+			for (final var dot : dots[0]) {
+				final var i = dot >> 16;
+				final var j = dot & 0xFFFF;
+				final var n = needles[i];
+				var c = n.charAt(j);
 
 				if (c == '\r')
 					c = '\n';
@@ -93,10 +93,10 @@ public class CharsetDetector {
 			tmp.clear();
 			dots[1] = tmp;
 
-			for (int dot : dots[0]) {
-				int i = dot >> 16;
-				int j = dot & 0xFFFF;
-				String n = needles[i];
+			for (final var dot : dots[0]) {
+				final var i = dot >> 16;
+				final var j = dot & 0xFFFF;
+				final var n = needles[i];
 				if (j == n.length())
 					return i;
 			}
@@ -109,7 +109,7 @@ public class CharsetDetector {
 
 	public static Charset detect(final String filename) {
 		try (final FileInputStream inputStream = new FileInputStream(filename)) {
-			byte[] m = new byte[4];
+			final byte[] m = new byte[4];
 			inputStream.read(m);
 
 			if ((m[0] & 0xff) == 0xEF && (m[1] & 0xff) == 0xBB && (m[2] & 0xff) == 0xBF)
@@ -127,9 +127,9 @@ public class CharsetDetector {
 			if (m[1] == 0)
 				return StandardCharsets.UTF_16LE;
 
-			final CharsetDetector detector = new CharsetDetector(inputStream);
+			final var detector = new CharsetDetector(inputStream);
 
-			int got = detector.findFirstOf("\n0", "\n1 CHAR");
+			var got = detector.findFirstOf("\n0", "\n1 CHAR");
 			if (got < 1)
 				return StandardCharsets.UTF_8;
 

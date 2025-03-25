@@ -44,7 +44,7 @@ public class CharStackQueue {
 	}
 
 	public char shift() {
-		char ans = backing[i0];
+		final var ans = backing[i0];
 		i0 += 1;
 		i0 %= backing.length;
 		return ans;
