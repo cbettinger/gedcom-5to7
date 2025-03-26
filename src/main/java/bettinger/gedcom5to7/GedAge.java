@@ -13,10 +13,12 @@ public class GedAge {
 	private static final Pattern SYNTAX_PART = Pattern.compile("(\\d+)\\s*([ymwd]?)", Pattern.CASE_INSENSITIVE);
 
 	private char modifier;
+
 	private int year;
 	private int month;
 	private int week;
 	private int day;
+
 	private String phrase;
 
 	private GedAge() {
@@ -25,10 +27,12 @@ public class GedAge {
 
 	private GedAge(final char modifier, final int year, final int month, final int week, final int day, final String phrase) {
 		this.modifier = modifier;
+
 		this.year = year;
 		this.month = month;
 		this.week = week;
 		this.day = day;
+
 		this.phrase = phrase;
 	}
 
