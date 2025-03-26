@@ -1,187 +1,222 @@
 package bettinger.gedcom5to7;
 
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class GedcomDefinitions {
-    private HashMap<String,String> cards, enums, langs, morelangs, pays, subs, tagOf;
-    private HashSet<String> structSet, enumSet, singular;
-    private HashMap<String, HashSet<String>> required;
-    private static GedcomDefinitions engine;
 
-    private static HashMap<String,String> readTSV(Scanner s) {
-        HashMap<String,String> ans = new HashMap<String, String>();
-        while (s.hasNextLine()) {
-            String line = s.nextLine();
-            int lio = line.lastIndexOf('\t');
-            if (lio < 0) continue;
-            ans.put(line.substring(0, lio), line.substring(lio+1));
-        }
-        return ans;
-    }
-    private static HashMap<String,HashSet<String>> readTSV2(Scanner s) {
-        HashMap<String,HashSet<String>> ans = new HashMap<String,HashSet<String>>();
-        while (s.hasNextLine()) {
-            String line = s.nextLine();
-            int lio = line.lastIndexOf('\t');
-            if (lio < 0) continue;
-            String key = line.substring(0, lio);
-            if (!ans.containsKey(key)) ans.put(key, new HashSet<String>());
-            ans.get(key).add(line.substring(lio+1));
-        }
-        return ans;
-    }
+	private static GedcomDefinitions engine;
 
+	public static GedcomDefinitions get() {
+		if (engine == null)
+			engine = new GedcomDefinitions();
 
-    private void addTags(HashMap<String,String> src) {
-        for(String key : src.keySet()) {
-            String tag = key.split("\t")[1];
-            String val = src.get(key);
-            String old = tagOf.get(val);
-            if (old != null && !tag.equals(old))
-                throw new RuntimeException("ERROR: uri "+val+" has multiple tags\n\t- "+old+"\n\t- "+tag);
-            else if (old == null) tagOf.put(val, tag);
-        }
-    }
+		return engine;
+	}
 
-    /// enumerations.tsv was split into two files after most of this code was written. This placeholder function replicates the old format from the new.
-    private static HashMap<String,String> oldEnumFormat(HashMap<String,String> enums, HashMap<String,HashSet<String>> esets) {
-        HashMap<String,String> ans = new HashMap<String,String>();
-        for(String superstruct : enums.keySet()) {
-            for(String taguri : esets.get(enums.get(superstruct))) {
-                int tagi = taguri.lastIndexOf('-');
-                if (tagi < 0) tagi = taguri.lastIndexOf('/');
-                String tag = taguri.substring(tagi+1);
-                ans.put(superstruct+'\t'+tag, taguri);
-            }
-        }
-        return ans;
-    }
+	private Map<String, String> tagOf;
+	private Map<String, Set<String>> required;
+	private Set<String> singular;
 
+	private Map<String, String> cardinalities;
 
-    private GedcomDefinitions() {
-        tagOf = new HashMap<String,String>();
+	private Map<String, String> payloads;
 
-        cards = readTSV(new Scanner(getClass().getResourceAsStream("/cardinalities.tsv")));
-        required = new HashMap<String,HashSet<String>>();
-        singular = new HashSet<String>();
-        cards.forEach((k,v) -> {
-            if (v.charAt(1) == '1') {
-                String[] k2 = k.split("\t");
-                required.putIfAbsent(k2[0], new HashSet<String>());
-                required.get(k2[0]).add(k2[1]);
-            }
-            if (v.charAt(3) == '1') singular.add(k);
-        });
+	private Map<String, String> enums;
+	private Set<String> enumSet;
 
-        pays = readTSV(new Scanner(getClass().getResourceAsStream("/payloads.tsv")));
+	private Map<String, String> substructures;
+	private Set<String> structSet;
 
-        HashMap<String, String> e1 = readTSV(new Scanner(getClass().getResourceAsStream("/enumerations.tsv")));
-        HashMap<String, HashSet<String>> e2 = readTSV2(new Scanner(getClass().getResourceAsStream("/enumerationsets.tsv")));
-        enums = oldEnumFormat(e1, e2);
-        enumSet = new HashSet<String>(enums.values());
-        addTags(enums);
+	private Map<String, String> languages;
+	private Map<String, String> moreLanguages;
 
-        subs = readTSV(new Scanner(getClass().getResourceAsStream("/substructures.tsv")));
-        subs.put("\tHEAD", "HEAD pseudostructure"); //// HARD-CODE based on substructures.tsv implementation
-        structSet = new HashSet<String>(subs.values());
-        addTags(subs);
+	private GedcomDefinitions() {
+		tagOf = new HashMap<>();
+		required = new HashMap<>();
+		singular = new HashSet<>();
 
-        langs = readTSV(new Scanner(getClass().getResourceAsStream("/languages.tsv")));
-        for(String key : langs.keySet()) { // remove trailing '*' from ELF's tsv
-            String val = langs.get(key);
-            if (val.endsWith("*")) {
-                langs.put(key, val.substring(0,val.length()-1));
-            }
-        }
-        morelangs = readTSV(new Scanner(getClass().getResourceAsStream("/all-languages.tsv")));
-    }
-    public static GedcomDefinitions getDefinitions() {
-        if (engine == null) engine = new GedcomDefinitions();
-        return engine;
-    }
+		cardinalities = readTSV(new Scanner(getClass().getResourceAsStream("/cardinalities.tsv")));
+		cardinalities.forEach((k, v) -> {
+			if (v.charAt(1) == '1') {
+				final var k2 = k.split("\t");
+				required.putIfAbsent(k2[0], new HashSet<>());
+				required.get(k2[0]).add(k2[1]);
+			}
 
-    public Collection<String> requiredSubstructures(String struct) {
-        Collection<String> ans = required.get(struct);
-        if (ans == null) ans = Collections.emptySet();
-        return ans;
-    }
-    public boolean justOne(String ctx, String uri) {
-        if (ctx == null) return false;
-        return singular.contains(ctx+'\t'+uri);
-    }
+			if (v.charAt(3) == '1')
+				singular.add(k);
+		});
 
-    /** Looks up the URI of an enumeration based on the GEDCOM 7 spec
-     * @param ctx the URI of the containing structure.
-     *            use <code>null</code> for an extension.
-     * @param tag the enumeration value
-     * @return the URI of the enumeration value, or <code>null</code> if unknown
-     */
-    public String enumURI(String ctx, String tag) {
-        if (ctx == null) {
-            String val = "https://gedcom.io/terms/v7/"+tag;
-            if (enumSet.contains(val)) return val;
-            return null;
-        } else {
-            String key = ctx+'\t'+tag;
-            return enums.get(key);
-        }
-    }
-    public boolean isStdEnum(String uri) {
-        return enumSet.contains(uri);
-    }
+		payloads = readTSV(new Scanner(getClass().getResourceAsStream("/payloads.tsv")));
 
-    /** Looks up the URI of an structure type based on the GEDCOM 7 spec
-     * @param ctx the URI of the containing structure type
-     *            use <code>""</code> for a record and <code>null</code> for an extension.
-     * @param tag the tag of the structure
-     * @return the URI of the structure type, or <code>null</code> if unknown
-     */
-    public String structURI(String ctx, String tag) {
-        if (ctx == null) {
-            String val = "https://gedcom.io/terms/v7/"+tag;
-            if (structSet.contains(val)) return val;
-            return null;
-        } else {
-            String key = ctx+'\t'+tag;
-            return subs.get(key);
-        }
-    }
-    public boolean isStdStruct(String uri) {
-        return structSet.contains(uri);
-    }
+		enums = toOldEnumFormat(readTSV(new Scanner(getClass().getResourceAsStream("/enumerations.tsv"))), readTSV2(new Scanner(getClass().getResourceAsStream("/enumerationsets.tsv"))));
+		enumSet = new HashSet<>(enums.values());
+		addTags(enums);
 
-    /** Looks up the tag of a structure URI based on the GEDCOM 7 spec
-     * @param uri the URI of the structure type
-     * @return the tag of the structure type, or <code>null</code> if unknown
-     */
-    public String structTag(String uri) {
-        if (uri == null) return null;
-        return tagOf.get(uri);
-    }
-    /** Looks up the payload type of a structure based on the GEDCOM 7 spec
-     * @param ctx the URI of the containing structure type
-     * @return the type code (URI or <code>"Y|<NULL>"</code> or <code>""</code> or <code>"@XREF:</code>tag<code>"</code>) of the payload type, or <code>null</code> if unknown
-     */
-    public String payloadURI(String ctx) {
-        if (ctx == null) return null;
-        return pays.get(ctx);
-    }
-    /** Looks up the language tag type of a language based ELF's mapping
-     * @param lang the 5.5.1 language name
-     * @return the BCP-47 language tag, or <code>null</code> if unknown
-     */
-    public String langTag(String ctx) {
-        if (ctx == null) return null;
-        String ans = langs.get(ctx);
-        if (ans == null) ans = morelangs.get(ctx);
-        return ans;
-    }
+		substructures = readTSV(new Scanner(getClass().getResourceAsStream("/substructures.tsv")));
+		substructures.put("\tHEAD", "HEAD pseudostructure"); // HARD-CODE based on substructures.tsv implementation
+		structSet = new HashSet<>(substructures.values());
+		addTags(substructures);
 
-    public static void main(String[] args) {
-        new GedcomDefinitions();
-    }
+		languages = readTSV(new Scanner(getClass().getResourceAsStream("/languages.tsv")));
+		for (final var entry : languages.entrySet()) { // remove trailing '*' from ELF's tsv
+			final var value = entry.getValue();
+			if (value.endsWith("*")) {
+				languages.put(entry.getKey(), value.substring(0, value.length() - 1));
+			}
+		}
+		moreLanguages = readTSV(new Scanner(getClass().getResourceAsStream("/all-languages.tsv")));
+	}
+
+	private void addTags(final Map<String, String> source) {
+		for (final var entry : source.entrySet()) {
+			final var tag = entry.getKey().split("\t")[1];
+			final var value = entry.getValue();
+			final var oldTag = tagOf.get(value);
+
+			if (oldTag != null && !tag.equals(oldTag))
+				throw new RuntimeException("ERROR: uri " + value + " has multiple tags\n\t- " + oldTag + "\n\t- " + tag);
+			else if (oldTag == null)
+				tagOf.put(value, tag);
+		}
+	}
+
+	/**
+	 * Looks up the URI of an enumeration based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure. use <code>null</code> for an
+	 *            extension.
+	 * @param tag the enumeration value
+	 * @return the URI of the enumeration value, or <code>null</code> if unknown
+	 */
+	public String getEnum(final String uri, final String tag) {
+		if (uri == null) {
+			final var val = "https://gedcom.io/terms/v7/" + tag;
+			if (enumSet.contains(val))
+				return val;
+
+			return null;
+		} else {
+			final var key = uri + '\t' + tag;
+			return enums.get(key);
+		}
+	}
+
+	/**
+	 * Looks up the URI of an structure type based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure type use <code>""</code> for a
+	 *            record and <code>null</code> for an extension.
+	 * @param tag the tag of the structure
+	 * @return the URI of the structure type, or <code>null</code> if unknown
+	 */
+	public String getStructure(final String uri, final String tag) {
+		if (uri == null) {
+			final var val = "https://gedcom.io/terms/v7/" + tag;
+			if (structSet.contains(val))
+				return val;
+
+			return null;
+		} else {
+			final var key = uri + '\t' + tag;
+			return substructures.get(key);
+		}
+	}
+
+	/**
+	 * Looks up the tag of a structure URI based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the structure type
+	 * @return the tag of the structure type, or <code>null</code> if unknown
+	 */
+	public String getTag(final String uri) {
+		return uri == null ? null : tagOf.get(uri);
+	}
+
+	/**
+	 * Looks up the payload type of a structure based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure type
+	 * @return the type code (URI or <code>"Y|<NULL>"</code> or <code>""</code> or
+	 *         <code>"@XREF:</code>tag<code>"</code>) of the payload type, or
+	 *         <code>null</code> if unknown
+	 */
+	public String getPayload(final String uri) {
+		return uri == null ? null : payloads.get(uri);
+	}
+
+	/**
+	 * Looks up the language tag type of a language based ELF's mapping
+	 *
+	 * @param lang the 5.5.1 language name
+	 * @return the BCP-47 language tag, or <code>null</code> if unknown
+	 */
+	public String getLanguage(final String languageName) {
+		if (languageName == null)
+			return null;
+
+		var ans = languages.get(languageName);
+		if (ans == null)
+			ans = moreLanguages.get(languageName);
+
+		return ans;
+	}
+
+	private static Map<String, String> readTSV(final Scanner scanner) {
+		final Map<String, String> result = new HashMap<>();
+
+		while (scanner.hasNextLine()) {
+			final var line = scanner.nextLine();
+
+			final var lastIndex = line.lastIndexOf('\t');
+			if (lastIndex < 0)
+				continue;
+
+			result.put(line.substring(0, lastIndex), line.substring(lastIndex + 1));
+		}
+
+		return result;
+	}
+
+	private static Map<String, Set<String>> readTSV2(final Scanner scanner) {
+		final Map<String, Set<String>> result = new HashMap<>();
+
+		while (scanner.hasNextLine()) {
+			final var line = scanner.nextLine();
+
+			final var lastIndex = line.lastIndexOf('\t');
+			if (lastIndex < 0)
+				continue;
+
+			final var key = line.substring(0, lastIndex);
+			result.computeIfAbsent(key, _ -> new HashSet<>());
+			result.get(key).add(line.substring(lastIndex + 1));
+		}
+
+		return result;
+	}
+
+	/**
+	 * enumerations.tsv was split into two files after most of this code was
+	 * written. This placeholder function replicates the old format from the new.
+	 */
+	private static Map<String, String> toOldEnumFormat(Map<String, String> enums, Map<String, Set<String>> enumSets) {
+		final var result = new HashMap<String, String>();
+
+		for (final var entry : enums.entrySet()) {
+			for (final var tag : enumSets.get(enums.get(entry.getKey()))) {
+				var tagIndex = tag.lastIndexOf('-');
+				if (tagIndex < 0)
+					tagIndex = tag.lastIndexOf('/');
+
+				result.put(entry.getKey() + '\t' + tag.substring(tagIndex + 1), tag);
+			}
+		}
+
+		return result;
+	}
 }

@@ -105,18 +105,18 @@ public class GedStruct {
 
     public void tag2uri() { this.tag2uri(true); }
     public void tag2uri(boolean replaceSelf) {
-        GedcomDefinitions def = GedcomDefinitions.getDefinitions();
+        GedcomDefinitions def = GedcomDefinitions.get();
         if (uri == null || replaceSelf) {
-            if (sup == null) uri = def.structURI("", tag);
-            else if (sup.uri == null || def.structTag(sup.uri) == null)
-                uri = def.structURI(null, tag);
-            else uri = def.structURI(sup.uri, tag);
+            if (sup == null) uri = def.getStructure("", tag);
+            else if (sup.uri == null || def.getTag(sup.uri) == null)
+                uri = def.getStructure(null, tag);
+            else uri = def.getStructure(sup.uri, tag);
         }
         for(GedStruct kid : sub) kid.tag2uri(replaceSelf);
     }
     public void uri2tag() {
         if (uri != null) {
-            String tag2 = GedcomDefinitions.getDefinitions().structTag(uri);
+            String tag2 = GedcomDefinitions.get().getTag(uri);
             if (tag2 != null) tag = tag2;
         }
         for(GedStruct kid : sub) kid.uri2tag();
