@@ -8,17 +8,15 @@ import bettinger.gedcom5to7.GedcomDefinitions;
 
 public class EnumFilter implements Filter {
 	public Collection<GedStruct> update(final GedStruct struct) {
-		final var definitions = GedcomDefinitions.get();
-
-		final var payload = definitions.getPayload(struct.uri);
+		final var payload = GedcomDefinitions.getPayload(struct.uri);
 
 		if ("https://gedcom.io/terms/v7/type-Enum".equals(payload)) {
 			final var bit = struct.payload.trim().toUpperCase().replaceAll("[- ]+", "_");
-			final var uri = definitions.getEnum(struct.uri, bit);
+			final var uri = GedcomDefinitions.getEnum(struct.uri, bit);
 
 			if (uri == null) {
 				new GedStruct(struct, "https://gedcom.io/terms/v7/PHRASE", struct.payload);
-				struct.payload = definitions.getEnum(struct.uri, "OTHER") == null ? "_OTHER" : "OTHER";
+				struct.payload = GedcomDefinitions.getEnum(struct.uri, "OTHER") == null ? "_OTHER" : "OTHER";
 			} else {
 				struct.payload = bit;
 			}
@@ -32,7 +30,7 @@ public class EnumFilter implements Filter {
 			for (var bit : bits) {
 				bit = bit.trim().toUpperCase();
 
-				if (definitions.getEnum(struct.uri, bit) != null) {
+				if (GedcomDefinitions.getEnum(struct.uri, bit) != null) {
 					if (!struct.payload.isEmpty())
 						struct.payload += ", ";
 
@@ -46,7 +44,7 @@ public class EnumFilter implements Filter {
 				if (!struct.payload.isEmpty())
 					struct.payload += ", ";
 
-				struct.payload = definitions.getEnum(struct.uri, "OTHER") == null ? "_OTHER" : "OTHER";
+				struct.payload = GedcomDefinitions.getEnum(struct.uri, "OTHER") == null ? "_OTHER" : "OTHER";
 				new GedStruct(struct, "https://gedcom.io/terms/v7/PHRASE", others);
 			}
 		}

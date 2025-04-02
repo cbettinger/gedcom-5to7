@@ -156,14 +156,13 @@ public class GedStruct {
 	}
 
 	public void tag2uri(final boolean replaceSelf) {
-		final var definitions = GedcomDefinitions.get();
 		if (uri == null || replaceSelf) {
 			if (sup == null)
-				uri = definitions.getStructure("", tag);
-			else if (sup.uri == null || definitions.getTag(sup.uri) == null)
-				uri = definitions.getStructure(null, tag);
+				uri = GedcomDefinitions.getStructure("", tag);
+			else if (sup.uri == null || GedcomDefinitions.getTag(sup.uri) == null)
+				uri = GedcomDefinitions.getStructure(null, tag);
 			else
-				uri = definitions.getStructure(sup.uri, tag);
+				uri = GedcomDefinitions.getStructure(sup.uri, tag);
 		}
 
 		for (final var subStructure : sub)
@@ -172,7 +171,7 @@ public class GedStruct {
 
 	public void uri2tag() {
 		if (uri != null) {
-			final var tag2 = GedcomDefinitions.get().getTag(uri);
+			final var tag2 = GedcomDefinitions.getTag(uri);
 			if (tag2 != null)
 				tag = tag2;
 		}

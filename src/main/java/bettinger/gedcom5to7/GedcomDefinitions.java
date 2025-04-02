@@ -85,87 +85,6 @@ public class GedcomDefinitions {
 		}
 	}
 
-	/**
-	 * Looks up the URI of an enumeration based on the GEDCOM 7 spec
-	 *
-	 * @param uri the URI of the containing structure. use <code>null</code> for an
-	 *            extension.
-	 * @param tag the enumeration value
-	 * @return the URI of the enumeration value, or <code>null</code> if unknown
-	 */
-	public String getEnum(final String uri, final String tag) {
-		if (uri == null) {
-			final var val = "https://gedcom.io/terms/v7/" + tag;
-			if (enumSet.contains(val))
-				return val;
-
-			return null;
-		} else {
-			final var key = uri + '\t' + tag;
-			return enums.get(key);
-		}
-	}
-
-	/**
-	 * Looks up the URI of an structure type based on the GEDCOM 7 spec
-	 *
-	 * @param uri the URI of the containing structure type use <code>""</code> for a
-	 *            record and <code>null</code> for an extension.
-	 * @param tag the tag of the structure
-	 * @return the URI of the structure type, or <code>null</code> if unknown
-	 */
-	public String getStructure(final String uri, final String tag) {
-		if (uri == null) {
-			final var val = "https://gedcom.io/terms/v7/" + tag;
-			if (structSet.contains(val))
-				return val;
-
-			return null;
-		} else {
-			final var key = uri + '\t' + tag;
-			return substructures.get(key);
-		}
-	}
-
-	/**
-	 * Looks up the tag of a structure URI based on the GEDCOM 7 spec
-	 *
-	 * @param uri the URI of the structure type
-	 * @return the tag of the structure type, or <code>null</code> if unknown
-	 */
-	public String getTag(final String uri) {
-		return uri == null ? null : tagOf.get(uri);
-	}
-
-	/**
-	 * Looks up the payload type of a structure based on the GEDCOM 7 spec
-	 *
-	 * @param uri the URI of the containing structure type
-	 * @return the type code (URI or <code>"Y|<NULL>"</code> or <code>""</code> or
-	 *         <code>"@XREF:</code>tag<code>"</code>) of the payload type, or
-	 *         <code>null</code> if unknown
-	 */
-	public String getPayload(final String uri) {
-		return uri == null ? null : payloads.get(uri);
-	}
-
-	/**
-	 * Looks up the language tag type of a language based ELF's mapping
-	 *
-	 * @param lang the 5.5.1 language name
-	 * @return the BCP-47 language tag, or <code>null</code> if unknown
-	 */
-	public String getLanguage(final String languageName) {
-		if (languageName == null)
-			return null;
-
-		var ans = languages.get(languageName);
-		if (ans == null)
-			ans = moreLanguages.get(languageName);
-
-		return ans;
-	}
-
 	private static Map<String, String> readTSV(final Scanner scanner) {
 		final Map<String, String> result = new HashMap<>();
 
@@ -218,5 +137,106 @@ public class GedcomDefinitions {
 		}
 
 		return result;
+	}
+
+	public static String getEnum(final String uri, final String tag) {
+		return GedcomDefinitions.get()._getEnum(uri, tag);
+	}
+
+	public static String getStructure(final String uri, final String tag) {
+		return GedcomDefinitions.get()._getStructure(uri, tag);
+	}
+
+	public static String getTag(final String uri) {
+		return GedcomDefinitions.get()._getTag(uri);
+	}
+
+	public static String getPayload(final String uri) {
+		return GedcomDefinitions.get()._getPayload(uri);
+	}
+
+	public static String getLanguage(final String languageName) {
+		return GedcomDefinitions.get()._getLanguage(languageName);
+	}
+
+	/**
+	 * Looks up the URI of an enumeration based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure. use <code>null</code> for an
+	 *            extension.
+	 * @param tag the enumeration value
+	 * @return the URI of the enumeration value, or <code>null</code> if unknown
+	 */
+	private String _getEnum(final String uri, final String tag) {
+		if (uri == null) {
+			final var val = "https://gedcom.io/terms/v7/" + tag;
+			if (enumSet.contains(val))
+				return val;
+
+			return null;
+		} else {
+			final var key = uri + '\t' + tag;
+			return enums.get(key);
+		}
+	}
+
+	/**
+	 * Looks up the URI of an structure type based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure type use <code>""</code> for a
+	 *            record and <code>null</code> for an extension.
+	 * @param tag the tag of the structure
+	 * @return the URI of the structure type, or <code>null</code> if unknown
+	 */
+	private String _getStructure(final String uri, final String tag) {
+		if (uri == null) {
+			final var val = "https://gedcom.io/terms/v7/" + tag;
+			if (structSet.contains(val))
+				return val;
+
+			return null;
+		} else {
+			final var key = uri + '\t' + tag;
+			return substructures.get(key);
+		}
+	}
+
+	/**
+	 * Looks up the tag of a structure URI based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the structure type
+	 * @return the tag of the structure type, or <code>null</code> if unknown
+	 */
+	private String _getTag(final String uri) {
+		return uri == null ? null : tagOf.get(uri);
+	}
+
+	/**
+	 * Looks up the payload type of a structure based on the GEDCOM 7 spec
+	 *
+	 * @param uri the URI of the containing structure type
+	 * @return the type code (URI or <code>"Y|<NULL>"</code> or <code>""</code> or
+	 *         <code>"@XREF:</code>tag<code>"</code>) of the payload type, or
+	 *         <code>null</code> if unknown
+	 */
+	private String _getPayload(final String uri) {
+		return uri == null ? null : payloads.get(uri);
+	}
+
+	/**
+	 * Looks up the language tag type of a language based ELF's mapping
+	 *
+	 * @param lang the 5.5.1 language name
+	 * @return the BCP-47 language tag, or <code>null</code> if unknown
+	 */
+	private String _getLanguage(final String languageName) {
+		if (languageName == null)
+			return null;
+
+		var ans = languages.get(languageName);
+		if (ans == null)
+			ans = moreLanguages.get(languageName);
+
+		return ans;
 	}
 }
