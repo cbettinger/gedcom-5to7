@@ -8,7 +8,7 @@ import bettinger.gedcom5to7.GedStruct;
 public class FileFilter implements Filter {
 	public Collection<GedStruct> update(final GedStruct struct) {
 		if ("https://gedcom.io/terms/v7/FILE".equals(struct.uri)) {
-			String url = struct.payload;
+			var url = struct.payload;
 
 			if (url.contains("://")) {
 				// URL schema://host.com/path/to/file.ext

@@ -19,7 +19,7 @@ public class ExidFilter implements Filter {
 				break;
 			case "RFN":
 				struct.uri = URI;
-				int colon = struct.payload.indexOf(':');
+				final var colon = struct.payload.indexOf(':');
 				if (colon < 0) {
 					new GedStruct(struct, TAG, "https://gedcom.io/terms/v7/RFN");
 				} else {
