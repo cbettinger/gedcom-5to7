@@ -9,7 +9,6 @@ import java.nio.file.Paths;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Stack;
 import java.util.TreeMap;
 
 import bettinger.gedcom5to7.pipeline.AgeDateFilter;
@@ -91,7 +90,7 @@ public class Converter {
 	 * pointers.
 	 */
 	private void fuzzyParse(final String filename) {
-		final var stack = new Stack<GedStruct>();
+		final var stack = new LinkedList<GedStruct>();
 		final var xrefs = new TreeMap<String, GedStruct>();
 
 		try (final var stream = Files.lines(Paths.get(filename), CharsetDetector.detect(filename))) {
@@ -102,7 +101,7 @@ public class Converter {
 					while (got.level < stack.size())
 						stack.pop();
 
-					if (stack.empty())
+					if (stack.isEmpty())
 						records.add(got);
 					else
 						stack.peek().addSubstructure(got);
