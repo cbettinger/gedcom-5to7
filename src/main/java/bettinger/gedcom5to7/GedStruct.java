@@ -229,7 +229,7 @@ public class GedStruct {
 				if (cleanup)
 					payload = null;
 			} else if (cleanup && FUZZY_XREF.matcher(payload).matches()) {
-				pointsTo = VOID;	// TODO: log this workaround
+				pointsTo = VOID; // TODO: log this workaround
 			}
 		}
 
